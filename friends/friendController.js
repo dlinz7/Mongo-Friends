@@ -41,6 +41,28 @@ router
 
     })
 
+    router
+    .route('/:id')
+    .get( (req, res) => {
+        const {id} = req.params;
+        Friend
+        .findById(id)
+            .then(FriendFound => {
+                if(FriendFound.length === 0) {
+                    res.status(404);
+                    res.json({message: "The friend with the specified ID does not exist."});
+                    return;
+                }
+                res.json(FriendFound);
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(500);
+                res.json({errorMessage: "The friend information could not be retrieved."});
+            })
+    })
+
+
 
 
 
